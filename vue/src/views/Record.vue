@@ -18,7 +18,20 @@
       <el-button class="ml-5" type="primary" @click="load">搜索</el-button>
       <el-button type="warning" @click="reset">重置</el-button>
     </div>
-
+    <div style="margin: 10px 0">
+      <el-popconfirm
+          class="ml-5"
+          confirm-button-text='确定'
+          cancel-button-text='我再想想'
+          icon="el-icon-info"
+          icon-color="red"
+          title="您确定批量删除这些数据吗？"
+          @confirm="delBatch"
+      >
+        <el-button type="danger" slot="reference">批量删除 <i class="el-icon-remove-outline"></i></el-button>
+      </el-popconfirm>
+      <el-button type="primary" @click="exp" class="ml-5">导出 <i class="el-icon-top"></i></el-button>
+    </div>
     <el-table
       :data="tableData"
       border
@@ -106,6 +119,9 @@ export default {
       this.request.get("/role").then((res) => {
         this.roles = res.data;
       });
+    },
+    exp() {
+      window.open(`http://${serverIp}:9090/record/export`)
     },
     handleSelectionChange(val) {
       console.log(val);
